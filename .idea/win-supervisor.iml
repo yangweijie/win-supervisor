@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/app" isTestSource="false" packagePrefix="app\" />
+      <sourceFolder url="file://$MODULE_DIR$/src/extend" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/jolicode/jolinotif" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/jolicode/php-os-helper" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/league/flysystem" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/league/mime-type-detection" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/mnapoli/silly" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/php-di/invoker" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/psr/container" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/psr/http-message" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/psr/log" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/psr/simple-cache" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/console" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/deprecation-contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/polyfill-ctype" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/polyfill-intl-grapheme" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/polyfill-intl-normalizer" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/polyfill-mbstring" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/process" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/service-contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/string" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/var-dumper" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/topthink/framework" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/topthink/think-filesystem" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/topthink/think-helper" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/topthink/think-orm" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/topthink/think-trace" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
