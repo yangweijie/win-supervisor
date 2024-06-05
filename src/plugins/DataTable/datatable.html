@@ -1,0 +1,66 @@
+<div class="form-group col-lg-{$_layout['lg']|default='12'} col-md-{$_layout['md']|default='12'} col-sm-{$_layout['sm']|default='12'} col-xs-{$_layout['xs']|default='12'} {$extra_class|default=''}"
+	id="form_group_{$name}">
+	<label class="col-xs-12" for="{$name}">{$title|htmlspecialchars}</label>
+	<div class="col-sm-12" style="background-color: #f1f1f1;">
+		<table class="table table-bordered" id="table-{$name}">
+			{notempty name="head"}
+			<thead>
+				{volist name="head" id="row"}
+				<tr>
+					{volist name="row" id="vo"}
+					<th style="vertical-align: middle;" {notempty name="vo.rowspan" }rowspan="{$vo.rowspan}" {/notempty}
+						{notempty name="vo.colspan" }colspan="{$vo.colspan}" {/notempty}>{$vo.value|raw|default=''}</th>
+					{/volist}
+				</tr>
+				{/volist}
+			</thead>
+			{/notempty}
+			<tbody>
+				{empty name="data"}
+				<tr class="empty">
+					<td class="text-center text-muted" colspan="{$cols|default=1}">暂无数据</td>
+				</tr>
+				{else/}
+
+				{volist name="data" id="form" key="number"}
+				<tr class="datatable {$form.type}_{$number}">
+					 
+					<td>
+						<!-- { php} dump($form);{/php} -->
+
+						{switch name="form.type"}
+						{case value="text"}
+
+						{include file="../app/common/builder/form/items/text.html" type='' /}
+						{php}if($number > 1){ {/php}
+						{include file="../app/common/builder/form/items/select.html" type='' /}
+						{php} } {/php}
+						{/case}
+						{case value="select"}
+
+						{include file="../app/common/builder/form/items/select.html" type='' /}
+
+						{/case}
+						{/switch}
+
+					</td>
+					{php}if($number > 1){ {/php}
+					<td>
+						<button class="btn btn-default datatable del {$form.type}_{$number}" id="datatable_delete_tr_btn"
+							data-toggle="dropdown" type="button" aria-expanded="false">删除</button>
+					</td>
+					{php} } {/php}
+				</tr>
+				{/volist}
+				{/empty}
+			</tbody>
+		</table>
+		<button class="btn btn-default datatable add {$form.type}_{$number}" id="datatable_delete_tr_btn"
+		data-toggle="dropdown" type="button" aria-expanded="false">添加</button>
+	</div>
+</div>
+<script>
+
+
+	// 表单验证
+</script>

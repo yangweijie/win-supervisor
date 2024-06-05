@@ -1,0 +1,42 @@
+{extend name="$_admin_base_layout" /}
+{block name="style"}
+<link rel="stylesheet" href="/static/amis-sdk/sdk.css">
+<link rel="stylesheet" href="/static/amis-sdk/helper.css">
+<link rel="stylesheet" href="/static/amis-static/iconfont.css">
+<style>
+	.amis-scope .cxd-Table-table {
+		font-size: var(--Alert--danger-bg);
+	}
+
+	.amis-scope .cxd-Pagination>li>a,
+	.amis-scope .cxd-Pagination>li>span {
+		font-size: var(--Alert--danger-bg);
+	}
+</style>
+{/block}
+{block name="content"}
+<div class="row">
+	<div class="col-md-12">
+		<div class="block block-bordered">
+			<div class="block-content">
+				<div id="root"></div>
+			</div>
+		</div>
+	</div>
+</div>
+{/block}
+
+{block name="script"}
+<script rel="stylesheet" src="/static/amis-sdk/sdk.js"></script>
+<script>
+	(function () {
+		let amis = amisRequire('amis/embed');
+		// 通过替换下面这个配置来生成不同页面
+		let amisJSON = JSON.parse('{$jsonpage|raw}');
+
+		console.log(amisJSON);
+		let amisScoped = amis.embed('#root', amisJSON);
+
+	})();
+</script>
+{/block}

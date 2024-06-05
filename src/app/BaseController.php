@@ -1,8 +1,10 @@
 <?php
-declare (strict_types = 1);
+
+declare(strict_types=1);
 
 namespace app;
 
+use app\common\service\thinkphp_jump\Jump as Thinkphp_jumpJump;
 use think\App;
 use think\exception\ValidateException;
 use think\Validate;
@@ -12,6 +14,7 @@ use think\Validate;
  */
 abstract class BaseController
 {
+    use Thinkphp_jumpJump;
     /**
      * Request实例
      * @var \think\Request
@@ -41,9 +44,9 @@ abstract class BaseController
      * @access public
      * @param  App  $app  应用对象
      */
-    public function __construct(App $app)
+    public function __construct()
     {
-        $this->app     = $app;
+        $this->app     = app();
         $this->request = $this->app->request;
 
         // 控制器初始化
@@ -52,7 +55,8 @@ abstract class BaseController
 
     // 初始化
     protected function initialize()
-    {}
+    {
+    }
 
     /**
      * 验证数据
@@ -66,6 +70,24 @@ abstract class BaseController
      */
     protected function validate(array $data, string|array $validate, array $message = [], bool $batch = false)
     {
+
+        if (class_exists($validate)) {
+            $appname =   request()->appname;
+            $validate_class =    "app\\{$appname}\\validate\\{$validate}";
+            $validate_class = class_exists($validate_class) ? $validate_class : $validate;
+        } else {
+            $validate_class = $validate;
+        }
+        try {
+            validate($validate_class)->check($data);
+            return true;
+        } catch (ValidateException $e) {
+            // 验证失败 输出错误信息
+            return $e->getMessage();
+           
+        }
+
+
         if (is_array($validate)) {
             $v = new Validate();
             $v->rule($validate);
@@ -90,5 +112,4 @@ abstract class BaseController
 
         return $v->failException(true)->check($data);
     }
-
 }
