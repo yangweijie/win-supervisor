@@ -50,13 +50,15 @@ class Config
 	 */
 	public function handle()
 	{
-		if ($this->appname === 'apidoc') return;
+
 		//如果是安装操作，直接返回
 		if (request()->appname === 'install') return;
 		// 获取入口目录
 		$base_file = Request::baseFile();
+        if($base_file == '/router.php'){
+            chdir(root_path().DIRECTORY_SEPARATOR.'public');
+        }
 		$base_dir  = substr($base_file, 0, strripos($base_file, '/') + 1);
-
 		Env::set('public_path', $base_dir);
 
 		// 视图输出字符串内容替换

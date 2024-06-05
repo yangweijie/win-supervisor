@@ -7,8 +7,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/extend" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/plugins" isTestSource="false" packagePrefix="plugins\" />
-      <sourceFolder url="file://$MODULE_DIR$/src/spec" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/tp8/app" isTestSource="false" packagePrefix="app\" />
       <sourceFolder url="file://$MODULE_DIR$/tp8/extend" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/src/vendor/composer" />
@@ -97,6 +95,7 @@
       <excludeFolder url="file://$MODULE_DIR$/tp8/vendor/topthink/think-helper" />
       <excludeFolder url="file://$MODULE_DIR$/tp8/vendor/topthink/think-orm" />
       <excludeFolder url="file://$MODULE_DIR$/tp8/vendor/topthink/think-trace" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/yangweijie/think-exception" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

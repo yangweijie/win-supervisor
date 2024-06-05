@@ -11,7 +11,7 @@ namespace app\index\controller;
 
 use app\common\builder\ZBuilder;
 use app\common\controller\Common;
-
+use app\index\model\SupervisorApps;
 /**
  * 前台首页控制器
  * @package app\index\controller
@@ -20,52 +20,58 @@ class Index extends Common
 {
     public function index()
     {
-        $ini = <<<INI
-[program:test_one]
-command=java -jar /data/smallvideo/supervisor/taskApp-exec.jar TaskTestOne  ; 被监控的进程路径
-priority=1                    ; 数字越高，优先级越高
-numprocs=1                    ; 启动几个进程
-autostart=true                ; 随着supervisord的启动而启动
-autorestart=true              ; 自动重启
-startretries=10               ; 启动失败时的最多重试次数
-exitcodes=0                   ; 正常退出代码
-stopsignal=KILL               ; 用来杀死进程的信号
-stopwaitsecs=10               ; 发送SIGKILL前的等待时间
-redirect_stderr=true          ; 重定向stderr到stdout
+        cookie('__forward__', $_SERVER['REQUEST_URI']);
 
-[program:test_two]
-command=java -jar /data/smallvideo/supervisor/taskApp-exec.jar TaskTestOne  ; 被监控的进程路径
-priority=1                    ; 数字越高，优先级越高
-numprocs=1                    ; 启动几个进程
-autostart=true                ; 随着supervisord的启动而启动
-autorestart=true              ; 自动重启
-startretries=10               ; 启动失败时的最多重试次数
-exitcodes=0                   ; 正常退出代码
-stopsignal=KILL               ; 用来杀死进程的信号
-stopwaitsecs=10               ; 发送SIGKILL前的等待时间
-redirect_stderr=true          ; 重定向stderr到stdout
-INI;
+        // 获取查询条件
+        $map = $this->getMap();
 
-        $arr = parse_ini_string($ini);
-        dd($arr);
-        $data_list = [
-            [
-                'id'=>1,
-                'title'=>'1111',
-            ]
-        ];
+        // 数据列表
+        $data_list = SupervisorApps::where($map)->order('id desc')->paginate();
+        if ($data_list->count()) {
+            $page		= $data_list->render();
+            $data_list	= $data_list->toArray();
+        }else{
+            $data_list = [];
+        }
         return ZBuilder::make('table')
-            ->hideCheckbox(true)
+            ->setPageTitle('监控应用')
             ->assign('system_color', config('app.system_color'))
             ->assign('_pop', 1)
-//            ->addTopButton('contribute', ['title'=>'投稿', 'href'=>url('contribute'), 'class'=>'btn btn-primary one-pan-link-mark'], ['area' => ['800px', '62%']])
+            ->addTopButton('add', [], true) // 添加顶部按钮
+            ->addTopButton('delete') // 添加顶
             ->addColumns([ // 批量添加数据列
-                // ['id',           'ID'],
-                ['title',         '目录', 'link', url('detail', ['id'=>'__id__', '_pop'=>1])],
-                // ['right_button', '操作', 'btn'],
+                ['id',           'ID'],
+                ['name',         '名称'],
+                ['command', '命令'],
+                ['priority', '优先级'],
+                ['create_time', '添加时间'],
+                ['update_time', '更新时间'],
+                ['right_button', '操作', 'btn'],
             ])
             ->setRowList($data_list) // 设置表格数据
             ->fetch(); // 渲染模板
+    }
+
+    public function add(){
+        if($this->request->isPost()){
+            SupervisorApps::create($this->request->post());
+            $this->success('添加成功');
+        }else{
+            return ZBuilder::make('form')
+                // ->setPageTips('如果出现无法添加的情况，可能由于浏览器将本页面当成了广告，请尝试关闭浏览器的广告过滤功能再试。', 'warning')
+                ->addFormItems([
+                    ['text',   'title', '名称', ''],
+                    ['text',   'url', '源地址'],
+                    ['image',  'cover', '封面'],
+                    ['select', 'type', '类型', '', ['url'=>'url', 'rss'=>'rss'], 'url'],
+                    ['text',   'rule[list_selector]', '规则-列表选择器'],
+                    ['text',   'rule[list_href_replace]', '规则-列表地址过滤'],
+                    ['text',   'rule[content_selector]', '规则-内容选择器'],
+                    ['radio',  'rule[content_md]', '是否是markdown', '', ['否', '是'], 0],
+
+                ])
+                ->fetch();
+        }
     }
 
 }

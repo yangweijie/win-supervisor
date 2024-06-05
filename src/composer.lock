@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7c9cba9ef1e301d6054219501400d7c9",
+    "content-hash": "ca46eb5a27e0e60b7e6f6a3cda162a9d",
     "packages": [
         {
             "name": "aliyuncs/oss-sdk-php",
@@ -4095,6 +4095,69 @@
                 "wiki": "https://github.com/xxtime"
             },
             "time": "2023-03-24T17:19:33+00:00"
+        },
+        {
+            "name": "yangweijie/think-exception",
+            "version": "v1.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yangweijie/think-exception.git",
+                "reference": "6a8716b385875ca001f5a9b27869987e2ae4afb1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yangweijie/think-exception/zipball/6a8716b385875ca001f5a9b27869987e2ae4afb1",
+                "reference": "6a8716b385875ca001f5a9b27869987e2ae4afb1",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">=7.4",
+                "topthink/framework": "^6.0 | ^6.1 | ^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "think": {
+                    "services": [
+                        "yangweijie\\exception\\ExceptionService"
+                    ],
+                    "config": {
+                        "exception": "config/config.php"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "yangweijie\\exception\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "yangweijie",
+                    "email": "917647288@qq.com"
+                }
+            ],
+            "description": "一个 ThinkPHP 中 可以打开错误异常文件的异常处理",
+            "keywords": [
+                "exception",
+                "framework",
+                "thinkphp"
+            ],
+            "support": {
+                "email": "917647288@qq.com",
+                "issues": "https://github.com/yangweijie/think-exception/issues",
+                "source": "https://github.com/yangweijie/think-exception/tree/v1.0.6"
+            },
+            "time": "2024-04-26T14:04:13+00:00"
         }
     ],
     "packages-dev": [

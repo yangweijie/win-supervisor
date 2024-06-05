@@ -728,7 +728,7 @@ class Builder extends ZBuilder
 		$MenuModel = new Menu();
 		$menu  = $MenuModel->where('url_value', $url)->find();
 
-		if ($menu['params'] != '') {
+		if ($menu && $menu['params'] != '') {
 			$url_params = explode('&', trim($menu['params'], '&'));
 			if (!empty($url_params)) {
 				foreach ($url_params as $item) {
@@ -744,7 +744,7 @@ class Builder extends ZBuilder
 			});
 		}
 
-		return $menu['url_type'] == 'module_home' ? home_url($url, $params) : (string)url($url, $params);
+		return !$menu || $menu['url_type'] == 'module_home' ? home_url($url, $params) : (string)url($url, $params);
 	}
 
 	/**

@@ -19,7 +19,7 @@ if "%~1"=="" (
  
 
 %~dp0/php.exe %~dp0/../src/think run --port %port%
-echo %~dp0/php.exe %~dp0/../src/think run --port %port%
+echo %~dp0/php.exe %~dp0/../src/think run --port %port% -t %~dp0/../src/public
 rem pause
 rem return code demo
 exit /b %1
