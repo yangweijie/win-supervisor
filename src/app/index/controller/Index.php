@@ -34,6 +34,7 @@ class Index extends Common
             $data_list = [];
         }
         return ZBuilder::make('table')
+            ->setTableName('supervisor_apps')
             ->setPageTitle('监控应用')
             ->assign('system_color', config('app.system_color'))
             ->assign('_pop', 1)
@@ -46,8 +47,10 @@ class Index extends Common
                 ['priority', '优先级'],
                 ['create_time', '添加时间'],
                 ['update_time', '更新时间'],
+                ['redirect_stderr', '重新向', 'switch'],
                 ['right_button', '操作', 'btn'],
             ])
+//            ->addRightButton('edit')
             ->setRowList($data_list) // 设置表格数据
             ->fetch(); // 渲染模板
     }
