@@ -27,12 +27,16 @@ class AppRunning extends Command
             return 0;
         }
         $process = $this->checking($app->pid);
-        $output->writeln($process? 'running': 'not running');
+        dump($process);
+        $output->writeln(!str_contains($process, 'No tasks are running')? 'running': 'stopped');
         return $process?1:0;
         // 指令输出
     }
 
     private function checking(int $pid){
+        if($pid == 0){
+            return '';
+        }
         $descriptorspec = [STDIN, ['pipe', 'w'], ['pipe', 'w']];
         $cmd = '"tasklist" /fi "pid eq '.$pid.'"';
         $proc = proc_open($cmd, $descriptorspec, $pipes);

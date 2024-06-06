@@ -12,11 +12,11 @@ class AutoRegModeConsoleService extends BaseService
 {
     public function boot()
     {
-        $commands = Cache::get('commands');
-        if (!$commands) {
+//        $commands = Cache::get('commands');
+//        if (!$commands) {
             $commands =   $this->getFile();
-            Cache::set('commands', $commands, 86400);
-        }
+//            Cache::set('commands', $commands, 86400);
+//        }
         $this->commands($commands);
     }
 
