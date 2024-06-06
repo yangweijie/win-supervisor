@@ -29,7 +29,7 @@ class Index extends Common
         $data_list = SupervisorApps::where($map)->order('id desc')->paginate();
         if ($data_list->count()) {
             $page		= $data_list->render();
-            $data_list	= $data_list->toArray();
+            $data_list	= $data_list->items();
         }else{
             $data_list = [];
         }

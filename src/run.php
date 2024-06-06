@@ -58,7 +58,7 @@ $app->command('supervisord [--gui] [--gui_port=]', function ($gui, $gui_port, Ou
 
 function is_web_running($port){
     $descriptorspec = [STDIN, ['pipe', 'w'], ['pipe', 'w']];
-    $cmd = '"netstat" -aon | findstr '.$port.' | findstr /i listening';
+    $cmd = '"netstat" -aon | findstr '.$port.' | findstr /i listening'; // 通过端口判断
     $proc = proc_open($cmd, $descriptorspec, $pipes);
     $ret = stream_get_contents($pipes[1]);
 //    echo $ret;
@@ -67,37 +67,26 @@ function is_web_running($port){
 }
 
 function kill_process($pid){
-//    $process = new Process(['taskkill', '/f', '/pid', $pid]);
     $descriptorspec = [STDIN, ['pipe', 'w'], ['pipe', 'w']];
     $cmd = '"taskkill" /F /PID '.$pid;
     var_dump($cmd);
     $proc = proc_open($cmd, $descriptorspec, $pipes);
     $ret = stream_get_contents($pipes[1]);
-//    echo $ret;
     proc_close($proc);
     return str_contains($ret, 'has been terminated');
-//    $process->run();
-//    $ret = $process->getOutput();
-//    var_dump($ret);
-//    return $ret;
 }
 
 $app->command('supervisord-web:start', function ($input, $output) {
-    global $web_port, $bat_file;
+    global $web_port;
     if(is_web_running($web_port)){
         $output->writeln('web already running');
     }else{
-        global $console_bin,$php_bin,$think_file;
-//        $web = new Process([
-////            $console_bin,
-//            $bat_file, $web_port
-//        ]);
+        global $php_bin,$think_file;
         $web = new Process([
            $php_bin, $think_file , 'run', '--port', $web_port
         ]);
         $web->setTimeout(null);
         $output->writeln($web->getCommandLine());
-
         $web->start();
         $web->wait();
         $output->writeln('Web is running');
