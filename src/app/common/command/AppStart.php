@@ -60,15 +60,19 @@ class AppStart extends Command
     }
 
     public function start($app, $bin){
-        $descriptorspec = [STDIN, ['pipe', 'w'], ['pipe', 'w']];
-        $cmd = str_replace($bin, sprintf('"%s"', $bin), $app->command);
-        $proc = proc_open($cmd, $descriptorspec, $pipes, null, null, [
-            'bypass_shell'=>true,
-            'create_process_group'=>true,
-        ]);
-        $ret = stream_get_contents($pipes[1]);
-        proc_close($proc);
-        return trim($ret);
+        $coroutine = new Coroutine(static function () use($app, $bin){
+            $descriptorspec = [STDIN, ['pipe', 'w'], ['pipe', 'w']];
+            $cmd = str_replace($bin, sprintf('"%s"', $bin), $app->command);
+            $proc = proc_open($cmd, $descriptorspec, $pipes, null, null, [
+                'bypass_shell'=>true,
+                'create_process_group'=>true,
+            ]);
+            $ret = stream_get_contents($pipes[1]);
+            proc_close($proc);
+            return $ret;
+        });
+        $coroutine->resume();
+        return;
     }
 
 //    public function start($app, $bin){
