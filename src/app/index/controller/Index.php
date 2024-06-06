@@ -60,15 +60,8 @@ class Index extends Common
             return ZBuilder::make('form')
                 // ->setPageTips('如果出现无法添加的情况，可能由于浏览器将本页面当成了广告，请尝试关闭浏览器的广告过滤功能再试。', 'warning')
                 ->addFormItems([
-                    ['text',   'title', '名称', ''],
-                    ['text',   'url', '源地址'],
-                    ['image',  'cover', '封面'],
-                    ['select', 'type', '类型', '', ['url'=>'url', 'rss'=>'rss'], 'url'],
-                    ['text',   'rule[list_selector]', '规则-列表选择器'],
-                    ['text',   'rule[list_href_replace]', '规则-列表地址过滤'],
-                    ['text',   'rule[content_selector]', '规则-内容选择器'],
-                    ['radio',  'rule[content_md]', '是否是markdown', '', ['否', '是'], 0],
-
+                    ['text',   'name', '名称', ''],
+                    ['text',   'command', '命令行'],
                 ])
                 ->fetch();
         }
