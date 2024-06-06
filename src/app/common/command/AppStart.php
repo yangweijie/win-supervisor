@@ -46,29 +46,15 @@ class AppStart extends Command
             return 404;
         }
         // 判断是否在运行
-        if($app->pid){
-            $output = Console::call('common:apprunning', [strval($app->id)]);
-            $ret = $output->fetch();
-            dump($ret);
-            // 未运行
-            if(stripos($ret, 'stopped') !== false){
-                goto startApp;
-            }else{
-                $output->writeln('started');
-            }
-        }else{
-            startApp:
+        $output = Console::call('common:apprunning', [strval($app->id)]);
+        $ret = $output->fetch();
+        dump($ret);
+        // 未运行
+        if(stripos($ret, 'stopped') !== false){
             $msg = $this->start($app, $bin);
-//            sleep(3);
-//            $output = Console::call('common:apprunning', [strval($app->id)]);
-//            $ret = $output->fetch();
-//            dump($ret);
-//            // 未运行
-//            if(stripos($ret, 'stopped') !== false){
-//                $app->pid = 0;
-//                $app->error_logs = substr($msg, 0, 4000);
-//                $app->save();
-//            }
+            dump($msg);
+        }else{
+            $output->writeln('started');
         }
         return 0;
     }
@@ -76,24 +62,7 @@ class AppStart extends Command
     public function start($app, $bin){
         $descriptorspec = [STDIN, ['pipe', 'w'], ['pipe', 'w']];
         $cmd = str_replace($bin, sprintf('"%s"', $bin), $app->command);
-        $bat_path = __DIR__.'/../../../../php/app_run_'.$app->id.'.bat';
-        dump(realpath($bat_path));
-        $content = <<<BAT
-@echo off
-:: 要启动的进程的完整路径
-set prog_path="{$cmd}"
-:: 启动进程
-start "" %prog_path%
-
-:: 获取进程 ID
-for /F "tokens=1 delims= " %%i in ('tasklist /FI "PID eq %pid%"/FI "imagename eq %prog_path%" 2^>nul') do set pid=%%i
-
-:: 将进程 ID 写入文件
-php think common:appstarted {$app->id} %pid%
-BAT;
-
-        file_put_contents($bat_path, $content);
-        $proc = proc_open($bat_path, $descriptorspec, $pipes, null, null, [
+        $proc = proc_open($cmd, $descriptorspec, $pipes, null, null, [
             'bypass_shell'=>true,
             'create_process_group'=>true,
         ]);
@@ -101,6 +70,35 @@ BAT;
         proc_close($proc);
         return trim($ret);
     }
+
+//    public function start($app, $bin){
+//        $descriptorspec = [STDIN, ['pipe', 'w'], ['pipe', 'w']];
+//        $cmd = str_replace($bin, sprintf('"%s"', $bin), $app->command);
+//        $bat_path = __DIR__.'/../../../../php/app_run_'.$app->id.'.bat';
+//        dump(realpath($bat_path));
+//        $content = <<<BAT
+//@echo off
+//:: 要启动的进程的完整路径
+//set prog_path="{$cmd}"
+//:: 启动进程
+//start "" %prog_path%
+//
+//:: 获取进程 ID
+//for /F "tokens=1 delims= " %%i in ('tasklist /FI "PID eq %pid%"/FI "imagename eq %prog_path%" 2^>nul') do set pid=%%i
+//
+//:: 将进程 ID 写入文件
+//php think common:appstarted {$app->id} %pid%
+//BAT;
+//
+//        file_put_contents($bat_path, $content);
+//        $proc = proc_open($bat_path, $descriptorspec, $pipes, null, null, [
+//            'bypass_shell'=>true,
+//            'create_process_group'=>true,
+//        ]);
+//        $ret = stream_get_contents($pipes[1]);
+//        proc_close($proc);
+//        return trim($ret);
+//    }
 
 //    public function start($app, $bin){
 ////        dump($_SERVER);

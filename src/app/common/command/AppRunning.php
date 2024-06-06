@@ -22,23 +22,22 @@ class AppRunning extends Command
     protected function execute(Input $input, Output $output)
     {
         $app = SupervisorApps::find($input->getArgument('id'));
-        $output->writeln("checking APP_ID:{$app->id}, PID:{$app->pid}");
         if(!$app){
             return 0;
         }
-        $process = $this->checking($app->pid);
+        $bin = SupervisorApps::getBin($app->command);
+        $bin_file = $bin = pathinfo($bin, PATHINFO_BASENAME);
+        $output->writeln("checking APP_ID:{$app->id}, bin:{$bin_file}");
+        $process = $this->checking($bin_file);
         dump($process);
         $output->writeln(!str_contains($process, 'No tasks are running')? 'running': 'stopped');
         return $process?1:0;
         // 指令输出
     }
 
-    private function checking(int $pid){
-        if($pid == 0){
-            return '';
-        }
+    private function checking(string $bin){
         $descriptorspec = [STDIN, ['pipe', 'w'], ['pipe', 'w']];
-        $cmd = '"tasklist" /fi "pid eq '.$pid.'"';
+        $cmd = 'tasklist /svc /FI "IMAGENAME eq '.$bin.'"';
         $proc = proc_open($cmd, $descriptorspec, $pipes);
         $ret = stream_get_contents($pipes[1]);
         proc_close($proc);
