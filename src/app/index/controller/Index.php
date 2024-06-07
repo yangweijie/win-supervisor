@@ -28,7 +28,6 @@ class Index extends Common
         // 数据列表
         $data_list = SupervisorApps::where($map)->order('id desc')->paginate();
         if ($data_list->count()) {
-            $page		= $data_list->render();
             $data_list	= $data_list->items();
         }else{
             $data_list = [];
@@ -38,6 +37,7 @@ class Index extends Common
             ->setPageTitle('监控应用')
             ->assign('system_color', config('app.system_color'))
             ->assign('_pop', 1)
+            ->setHeight(600)
             ->addTopButton('add', [], true) // 添加顶部按钮
             ->addTopButton('delete') // 添加顶
             ->addColumns([ // 批量添加数据列
@@ -58,7 +58,7 @@ class Index extends Common
     public function add(){
         if($this->request->isPost()){
             SupervisorApps::create($this->request->post());
-            $this->success('添加成功');
+            $this->success('添加成功', null, '_parent_reload');
         }else{
             return ZBuilder::make('form')
                 // ->setPageTips('如果出现无法添加的情况，可能由于浏览器将本页面当成了广告，请尝试关闭浏览器的广告过滤功能再试。', 'warning')

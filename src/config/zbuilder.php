@@ -28,7 +28,8 @@ return [
 		'area'       => ['80%', '90%'],
 		'shadeClose' => true,
 		'isOutAnim'  => false,
-		'anim'       => -1
+		'anim'       => -1,
+//        'skin'       =>'layui-layer-win10',
 	],
 
 	// 右侧按钮
