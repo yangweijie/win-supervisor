@@ -16,6 +16,14 @@ use Symfony\Component\Process\Process;
 
 require __DIR__.'/vendor/topthink/framework/src/helper.php';
 
+$pharPath = \Phar::running(false);
+if ($pharPath != "") {
+    // 打包后的路径获取
+    $envFile = dirname($pharPath) . "/index.html";
+} else {
+    // 没打包后的路径获取
+    $envFile = __DIR__. "/.env";
+}
 
 function notify($title = 'Notification title', $body = 'This is the body of your notification'){
     $notifier = new DefaultNotifier();
@@ -29,7 +37,7 @@ function notify($title = 'Notification title', $body = 'This is the body of your
 
 
 $env = new Env();
-$env->load(__DIR__.'/.env');
+$env->load($envFile);
 
 Db::setConfig([
     // 默认使用的数据库连接配置
