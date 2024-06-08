@@ -72,7 +72,7 @@ class AppStart extends Command
             return $ret;
         });
         $coroutine->resume();
-        return;
+        return '';
     }
 
 //    public function start($app, $bin){

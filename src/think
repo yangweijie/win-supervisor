@@ -8,6 +8,6 @@ require __DIR__ . '/vendor/autoload.php';
 
 $pharPath = \Phar::running(false);
 if(!defined('IN_PHAR'))
-    define('IN_PHAR', $pharPath != "");
+    define('IN_PHAR', $pharPath?true:false);
 // 应用初始化
 (new App())->console->run();
