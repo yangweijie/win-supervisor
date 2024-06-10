@@ -1,0 +1,21 @@
+{
+    "windows":{
+        "icon":"./favicon.ico",
+        "title":"win-supervisor",
+        "width":1024,
+        "height":960,
+        "hint":"auto",
+        "debug":true
+    },
+    "php":{
+        "file":"./php/php.exe",
+        "address":"127.0.0.1",
+        "port":"8080",
+        "entrance":"",
+        "is_custom_instruction":true,
+        "start_instruction":"./www/think run --port 8080",
+        "stop_instruction":"",
+        "auto_stop":true
+    }
+}
+    
